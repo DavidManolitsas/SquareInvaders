@@ -16,7 +16,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javafx.util.Duration;
 import model.Level;
 import model.Player;
 
@@ -29,6 +28,7 @@ class Home {
     private Stage stage;
     private MediaPlayer music;
     private int highScore;
+    private final static String SOUND_ROOT = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/";
 
     public Home (Stage stage, int highScore){
         this.stage = stage;
@@ -113,7 +113,7 @@ class Home {
     }
 
     private void composeMusic(){
-        String musicPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/music/00_Home.mp3";
+        String musicPath = SOUND_ROOT + "sound/music/00_Home.mp3";
         Media media = new Media(new File(musicPath).toURI().toString());
         music = new MediaPlayer(media);
         music.setVolume(0.8);

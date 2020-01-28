@@ -17,7 +17,7 @@ public class Level {
 
     //level stats
     private int levelNum;
-    private final int aliensPerRow = 8;
+    private final static int ALIENS_PER_ROW = 8;
     private int alienRows;
     private int totalAliens;
     private int lives;
@@ -37,6 +37,7 @@ public class Level {
     private ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
     private ArrayList<EnemyBullet> enemyBullets = new ArrayList<>();
     //sound effects
+    private  final static String SOUND_ROOT = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/";
     private AudioClip gunSound;
     private AudioClip gunImpact;
     private AudioClip fireball;
@@ -53,7 +54,7 @@ public class Level {
     public Level(int num, int enemyRows, int lives, int score, int highScore) {
         this.levelNum = num;
         this.alienRows = enemyRows;
-        this.totalAliens = aliensPerRow * alienRows;
+        this.totalAliens = ALIENS_PER_ROW * alienRows;
         this.lives = lives;
         this.score = score;
         this.roundOver = false;
@@ -269,50 +270,50 @@ public class Level {
 
     public void composeSoundEffects(){
         //bullet hit alien
-        String gunImpactPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/gunImpact.wav";
+        String gunImpactPath =  SOUND_ROOT + "sound/effects/gunImpact.wav";
         gunImpact = new AudioClip(new File(gunImpactPath).toURI().toString());
         gunImpact.setVolume(0.5);
 
         //overlord shoot
-        String fireballPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/fireball.wav";
+        String fireballPath =  SOUND_ROOT + "sound/effects/fireball.wav";
         fireball = new AudioClip(new File(fireballPath).toURI().toString());
         fireball.setVolume(0.8);
 
         //aliens shoot
-        String alienGunPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/alienGun.wav";
+        String alienGunPath =  SOUND_ROOT + "sound/effects/alienGun.wav";
         alienGun = new AudioClip(new File(alienGunPath).toURI().toString());
         alienGun.setVolume(0.25);
 
         //gun sound
-        String gunSoundPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/gun.wav";
+        String gunSoundPath =  SOUND_ROOT + "sound/effects/gun.wav";
         gunSound = new AudioClip(new File(gunSoundPath).toURI().toString());
         gunSound.setVolume(0.3);
 
         //alien killed
-        String alienKilledPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/alienKilled.wav";
+        String alienKilledPath =  SOUND_ROOT + "sound/effects/alienKilled.wav";
         alienKilled = new AudioClip(new File(alienKilledPath).toURI().toString());
 
         //overlord killed
-        String overlordKilledPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/overlordKilled.wav";
+        String overlordKilledPath = SOUND_ROOT + "sound/effects/overlordKilled.wav";
         overlordKilled = new AudioClip(new File(overlordKilledPath).toURI().toString());
         overlordKilled.setVolume(0.9);
 
         //player hit
-        String playerHitSoundPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/playerHit.wav";
+        String playerHitSoundPath = SOUND_ROOT + "sound/effects/playerHit.wav";
         playerHitSound = new AudioClip(new File(playerHitSoundPath).toURI().toString());
         playerHitSound.setVolume(0.75);
 
         //player killed
-        String playerKilledSoundPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/playerKilled.wav";
+        String playerKilledSoundPath = SOUND_ROOT + "sound/effects/playerKilled.wav";
         playerKilledSound = new AudioClip(new File(playerKilledSoundPath).toURI().toString());
 
         //level complete
-        String levelCompleteSoundPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/levelComplete.wav";
+        String levelCompleteSoundPath = SOUND_ROOT + "sound/effects/levelComplete.wav";
         levelCompleteSound = new AudioClip(new File(levelCompleteSoundPath).toURI().toString());
         levelCompleteSound.setVolume(0.60);
 
         //1up Collected
-        String oneUpPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/effects/1up.wav";
+        String oneUpPath = SOUND_ROOT + "sound/effects/1up.wav";
         oneUpCollected = new AudioClip(new File(oneUpPath).toURI().toString());
         oneUpCollected.setVolume(0.85);
 
@@ -321,7 +322,7 @@ public class Level {
     public void setMusic(){
         switch(levelNum){
         case 1:
-            String levelOneMusicPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/music/01_Combat.mp3";
+            String levelOneMusicPath = SOUND_ROOT + "sound/music/01_Combat.mp3";
             Media levelOneMedia = new Media(new File(levelOneMusicPath).toURI().toString());
             MediaPlayer levelOneMusic = new MediaPlayer(levelOneMedia);
             levelOneMusic.setVolume(0.8);
@@ -330,7 +331,7 @@ public class Level {
             setMusic(levelOneMusic);
             break;
             case 2:
-                String levelTwoMusicPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/music/02_Funk.mp3";
+                String levelTwoMusicPath = SOUND_ROOT + "sound/music/02_Funk.mp3";
                 Media levelTwoMedia = new Media(new File(levelTwoMusicPath).toURI().toString());
                 MediaPlayer levelTwoMusic = new MediaPlayer(levelTwoMedia);
                 levelTwoMusic.setVolume(0.8);
@@ -339,7 +340,7 @@ public class Level {
                 setMusic(levelTwoMusic);
                 break;
         case 3:
-            String levelThreeMusicPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/music/03_TheOriginal.mp3";
+            String levelThreeMusicPath = SOUND_ROOT + "sound/music/03_TheOriginal.mp3";
             Media levelThreeMedia = new Media(new File(levelThreeMusicPath).toURI().toString());
             MediaPlayer levelThreeMusic = new MediaPlayer(levelThreeMedia);
             levelThreeMusic.setVolume(0.8);
@@ -348,7 +349,7 @@ public class Level {
             setMusic(levelThreeMusic);
             break;
         case 4:
-            String levelFourMusicPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/music/04_Destiny.mp3";
+            String levelFourMusicPath = SOUND_ROOT + "sound/music/04_Destiny.mp3";
             Media levelFourMedia = new Media(new File(levelFourMusicPath).toURI().toString());
             MediaPlayer levelFourMusic = new MediaPlayer(levelFourMedia);
             levelFourMusic.setVolume(0.8);
@@ -357,7 +358,7 @@ public class Level {
             setMusic(levelFourMusic);
             break;
         case 5:
-            String levelFiveMusicPath = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/sound/music/05_BossBattle.mp3";
+            String levelFiveMusicPath = SOUND_ROOT + "sound/music/05_BossBattle.mp3";
             Media levelFiveMedia = new Media(new File(levelFiveMusicPath).toURI().toString());
             MediaPlayer levelFiveMusic = new MediaPlayer(levelFiveMedia);
             levelFiveMusic.setVolume(0.8);
