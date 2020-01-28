@@ -24,6 +24,7 @@ import model.OneUp;
 import model.Overlord;
 import model.Player;
 import model.PlayerBullet;
+import model.PowerUp;
 
 class CombatView extends Pane {
     private final Stage stage;
@@ -32,7 +33,7 @@ class CombatView extends Pane {
     //timers
     private double time = 0;
     private double overlordTimer = 0;
-    private double oneUpTimer = 0;
+    private double pickUpTimer = 0;
     //JavaFx Components
     private Text scoreText;
     private Text levelNumText;
@@ -72,7 +73,7 @@ class CombatView extends Pane {
         //update timers
         time += 0.016;
         overlordTimer += 0.016;
-        oneUpTimer += 0.16;
+        pickUpTimer += 0.16;
 
         //if music stops, start song again
         if(!level.getMusic().isAutoPlay()){
@@ -187,12 +188,22 @@ class CombatView extends Pane {
         getChildren().add(overlord);
     }
 
+    //Region start: pickups
     public void drawOneUp(){
         if(level.getOneUp() == null) {
             OneUp oneUp = new OneUp();
             level.setOneUp(oneUp);
             level.addElement(level.getOneUps(), oneUp);
             getChildren().add(level.getOneUp());
+        }
+    }
+
+    public void drawPowerUp(){
+        if(level.getPowerUp() == null){
+            PowerUp powerUp = new PowerUp();
+            level.setPowerUp(powerUp);
+            level.addElement(level.getPowerUps(), powerUp);
+            getChildren().add(level.getPowerUp());
         }
     }
 
@@ -218,6 +229,31 @@ class CombatView extends Pane {
             }
         }
     }
+
+    public void checkPowerUpStatus(){
+        if (level.getPowerUp() != null) {
+            PowerUp powerUp = level.getPowerUp();
+
+            if(powerUp.getCenterY() == 750 - powerUp.getRadius()){
+                getChildren().remove(powerUp);
+                powerUp.setFallen(true);
+            }
+            else if(!powerUp.isFallen()){
+                for(PowerUp power : level.getPowerUps()){
+                    if(power.getBoundsInParent().intersects(level.getPlayer().getBoundsInParent())){
+                        power.setFallen(true);
+                        getChildren().remove(powerUp);
+                        level.getPlayer().setPoweredUp(true);
+                        level.getPlayer().setStroke(Color.TURQUOISE);
+                        level.getPlayer().setStrokeWidth(3);
+                        break;
+                    }
+                }
+            }
+
+        }
+    }
+    //Region end: pickups
 
     public void drawScore(){
         int score = level.getScore();
@@ -322,7 +358,13 @@ class CombatView extends Pane {
             if (bullet.getBoundsInParent().intersects(level.getPlayer().getBoundsInParent())) {
                 level.getPlayerHitSound().play();
                 bullet.setDead(true);
-                level.setLives();
+                level.decreaseLives();
+
+                if(level.getPlayer().isPoweredUp()){
+                    level.getPlayer().setPoweredUp(false);
+                    level.getPlayer().setStroke(null);
+                }
+
                 if (level.getLives() > 0){
                     drawLives(level.getLives());
                     break;
@@ -336,9 +378,11 @@ class CombatView extends Pane {
         }
     }
 
-    public void playerShot(PlayerBullet bullet){
-        level.addElement(level.getPlayerBullets(), bullet);
-        getChildren().add(bullet);
+    public void playerShot(ArrayList<PlayerBullet> bullets){
+        for (PlayerBullet bullet: bullets) {
+            level.addElement(level.getPlayerBullets(), bullet);
+            getChildren().add(bullet);
+        }
     }
 
     public void aliensShoot(double freq){
@@ -398,7 +442,7 @@ class CombatView extends Pane {
             stage.setScene(scene);
         } else {
 
-            Level nextLevel = new Level(level.getLevelNum() + 1, level.getAlienRows() + 1, level.getLives(), level.getScore(), level.getHighScore());
+            Level nextLevel = new Level(level.getPlayer(), level.getLevelNum() + 1, level.getAlienRows() + 1, level.getLives(), level.getScore(), level.getHighScore());
             CombatView combatView = new CombatView(stage, nextLevel, level.getHighScore());
             Scene scene = new Scene(combatView.setContent(), Color.BLACK);
 
@@ -543,6 +587,19 @@ class CombatView extends Pane {
                 }
             }
         }
+
+        //power up appears
+        if(pickUpTimer > 200){
+            drawPowerUp();
+            pickUpTimer = 0;
+        }
+
+        checkPowerUpStatus();
+
+        if(level.getPowerUp() != null){
+            level.getPowerUp().moveDown();
+        }
+
     }
 
     public void levelFourBehaviour(){
@@ -584,9 +641,9 @@ class CombatView extends Pane {
         }
 
         //1up appears
-        if(oneUpTimer > 200){
+        if(pickUpTimer > 200){
             drawOneUp();
-            oneUpTimer = 0;
+            pickUpTimer = 0;
         }
 
         checkOneUpStatus();

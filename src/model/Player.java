@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
@@ -42,9 +44,22 @@ public class Player extends Polygon {
         }
     }
 
-    public PlayerBullet shoot() {
-        PlayerBullet bullet = new PlayerBullet((int) this.getTranslateX() + 15, (int) this.getTranslateY());
-        return bullet;
+    public ArrayList<PlayerBullet> shoot() {
+        ArrayList<PlayerBullet> bullets = new ArrayList<>();
+
+        if(poweredUp){
+            PlayerBullet bullet1 = new PlayerBullet((int) this.getTranslateX(), (int) this.getTranslateY());
+            PlayerBullet bullet2 = new PlayerBullet((int) this.getTranslateX() + 30, (int) this.getTranslateY());
+
+            bullets.add(bullet1);
+            bullets.add(bullet2);
+         return bullets;
+        }
+        else {
+            PlayerBullet bullet = new PlayerBullet((int) this.getTranslateX() + 15, (int) this.getTranslateY());
+            bullets.add(bullet);
+            return bullets;
+        }
     }
 
     public void setDead(boolean dead) {

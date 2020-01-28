@@ -30,7 +30,9 @@ public class Level {
     private Overlord overlord;
     //collectibles
     private OneUp oneUp = null;
+    private PowerUp powerUp = null;
     private ArrayList<OneUp> oneUps = new ArrayList<>();
+    private ArrayList<PowerUp> powerUps = new ArrayList<>();
     //lives
     private ArrayList<Life> lifeArray = new ArrayList<>();
     //bullets
@@ -52,6 +54,19 @@ public class Level {
     private MediaPlayer music;
 
     public Level(int num, int enemyRows, int lives, int score, int highScore) {
+        this.levelNum = num;
+        this.alienRows = enemyRows;
+        this.totalAliens = ALIENS_PER_ROW * alienRows;
+        this.lives = lives;
+        this.score = score;
+        this.roundOver = false;
+        addAliens();
+        composeSoundEffects();
+        setMusic();
+    }
+
+    public Level(Player player, int num, int enemyRows, int lives, int score, int highScore) {
+        this.player = player;
         this.levelNum = num;
         this.alienRows = enemyRows;
         this.totalAliens = ALIENS_PER_ROW * alienRows;
@@ -87,7 +102,7 @@ public class Level {
         return lives;
     }
 
-    public void setLives() {
+    public void decreaseLives() {
         this.lives--;
     }
 
@@ -153,6 +168,18 @@ public class Level {
 
     public ArrayList<OneUp> getOneUps() {
         return oneUps;
+    }
+
+    public PowerUp getPowerUp() {
+        return powerUp;
+    }
+
+    public void setPowerUp(PowerUp powerUp) {
+        this.powerUp = powerUp;
+    }
+
+    public ArrayList<PowerUp> getPowerUps() {
+        return powerUps;
     }
 
     public ArrayList<Life> getLifeArray() {

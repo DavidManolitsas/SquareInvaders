@@ -14,6 +14,7 @@ import model.Alien;
 import model.OneUp;
 import model.Overlord;
 import model.Player;
+import model.PowerUp;
 
 /**
  * @author David Manolitsas
@@ -24,6 +25,8 @@ public class Controls extends BorderPane {
 
     private Stage stage;
     private Scene prevScene;
+    private double bodySize = 22;
+    private double headerSize = 42;
 
     public Controls(Stage stage, Scene prevScene) {
         this.stage = stage;
@@ -35,11 +38,11 @@ public class Controls extends BorderPane {
         controlText.setSpacing(10);
 
         Text controlHeading = new Text("Controls");
-        controlHeading.setFont(Font.font("Courier New", 42));
+        controlHeading.setFont(Font.font("Courier New", headerSize));
         controlHeading.setFill(Color.YELLOW);
 
         Text controls = new Text("A: left\nD: Right\nSpace: Shoot\n");
-        controls.setFont(Font.font("Courier New", 28));
+        controls.setFont(Font.font("Courier New", bodySize));
         controls.setFill(Color.YELLOW);
 
         Text backBt = new Text("\nBack");
@@ -59,7 +62,7 @@ public class Controls extends BorderPane {
         //create components
         Player player = new Player(0, 0);
         Text playerTxt = new Text("Player");
-        playerTxt.setFont(Font.font("Courier New", 28));
+        playerTxt.setFont(Font.font("Courier New", bodySize));
         playerTxt.setFill(Color.YELLOW);
         //add components
         playerControl.getChildren().addAll(player, playerTxt);
@@ -72,7 +75,7 @@ public class Controls extends BorderPane {
         //create components
         Alien alien = new Alien(0, 0);
         Text alienTxt = new Text("Alien");
-        alienTxt.setFont(Font.font("Courier New", 28));
+        alienTxt.setFont(Font.font("Courier New", bodySize));
         alienTxt.setFill(Color.YELLOW);
         //add components
         alienControl.getChildren().addAll(alien, alienTxt);
@@ -85,7 +88,7 @@ public class Controls extends BorderPane {
         //create components
         Overlord overlord = new Overlord(0,0);
         Text overlordTxt = new Text("Overlord");
-        overlordTxt.setFont(Font.font("Courier New", 28));
+        overlordTxt.setFont(Font.font("Courier New", bodySize));
         overlordTxt.setFill(Color.YELLOW);
         //add components
         overlordControl.getChildren().addAll(overlord, overlordTxt);
@@ -96,14 +99,27 @@ public class Controls extends BorderPane {
         oneUpControl.setSpacing(15);
         //create components
         OneUp oneUp = new OneUp();
-        Text oneUpTxt = new Text("1 up");
-        oneUpTxt.setFont(Font.font("Courier New", 28));
+        Text oneUpTxt = new Text("1-up");
+        oneUpTxt.setFont(Font.font("Courier New", bodySize));
         oneUpTxt.setFill(Color.YELLOW);
         //add components
         oneUpControl.getChildren().addAll(oneUp, oneUpTxt);
         oneUpControl.setAlignment(Pos.CENTER);
 
-        controlText.getChildren().addAll(controlHeading, controls, playerControl, alienControl, overlordControl, oneUpControl, backBt);
+        //PowerUp
+        HBox powerUpControl = new HBox();
+        powerUpControl.setSpacing(15);
+        //create components
+        PowerUp powerUp = new PowerUp();
+        Text powerUpText = new Text("Power Up");
+        powerUpText.setFont(Font.font("Courier New", bodySize));
+        powerUpText.setFill(Color.YELLOW);
+        //add components
+        powerUpControl.getChildren().addAll(powerUp, powerUpText);
+        powerUpControl.setAlignment(Pos.CENTER);
+
+
+        controlText.getChildren().addAll(controlHeading, controls, playerControl, alienControl, overlordControl, oneUpControl, powerUpControl, backBt);
 
         setCenter(controlText);
         controlText.setAlignment(Pos.CENTER);
