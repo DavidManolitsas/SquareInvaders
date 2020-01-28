@@ -296,7 +296,6 @@ public class Level {
         //overlord killed
         String overlordKilledPath = SOUND_ROOT + "sound/effects/overlordKilled.wav";
         overlordKilled = new AudioClip(new File(overlordKilledPath).toURI().toString());
-        overlordKilled.setVolume(0.9);
 
         //player hit
         String playerHitSoundPath = SOUND_ROOT + "sound/effects/playerHit.wav";
