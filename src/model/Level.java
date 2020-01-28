@@ -176,6 +176,7 @@ public class Level {
         }
     }
 
+    //Region start: alien movement
     public int checkAlienPos(){
         //return 1 if aliens at left most, 0 if aliens at right most, -1 if neither
         for (Alien alien : aliens) {
@@ -226,8 +227,9 @@ public class Level {
             alien.setHitLeft(isHit);
         }
     }
+    //Region end: alien movement
 
-    //Region: sound effects
+    //Region Start: sound effects
     public AudioClip getGunSound() {
         return gunSound;
     }
@@ -368,6 +370,6 @@ public class Level {
         }
 
     }
-    //End region: Sound effects
+    //Region end: Sound effects
 
 }
