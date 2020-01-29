@@ -515,18 +515,6 @@ class CombatView extends Pane {
             time = 0;
         }
 
-        //power up appears
-        if(pickUpTimer > 50){
-            drawPowerUp();
-            pickUpTimer = 0;
-        }
-
-        checkPowerUpStatus();
-
-        if(level.getPowerUp() != null){
-            level.getPowerUp().moveDown();
-        }
-
     }
 
     public void levelTwoBehaviour(){
