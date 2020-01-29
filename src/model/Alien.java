@@ -1,6 +1,11 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 
 /**
  * @author David Manolitsas
@@ -14,10 +19,11 @@ public class Alien extends Enemy {
     private boolean hitRight = true;
 
     public Alien(int x, int y) {
-        super(x, y, 30, 30, Color.GREEN);
+        super(x, y, 30, 30, Color.BLACK);
         this.hp = 5;
         setTranslateX(x);
         setTranslateY(y);
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/greenAlien.png");
     }
 
     @Override
@@ -69,10 +75,10 @@ public class Alien extends Enemy {
             setDead(true);
         }
         else if(hp == 2){
-            setColor(Color.DARKRED);
+            setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/redAlien.png");
         }
         else if (hp > 2 && hp < 5){
-            setColor(Color.ORANGE);
+            setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/yellowAlien.png");
         }
     }
 
@@ -103,5 +109,24 @@ public class Alien extends Enemy {
 
     public void setColor(Color color){
         super.setFill(color);
+    }
+
+    public void setImage(String src) {
+       try {
+           FileInputStream input = new FileInputStream(src);
+           Image image = new Image(input);
+           ImagePattern imagePattern = new ImagePattern(image);
+           setFill(imagePattern);
+       } catch (FileNotFoundException fnfe){
+           if(hp == 2){
+               setColor(Color.DARKRED);
+           }
+           else if (hp > 2 && hp < 5){
+               setColor(Color.ORANGE);
+           }
+           else {
+               setColor(Color.GREEN);
+           }
+        }
     }
 }
