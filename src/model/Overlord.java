@@ -1,7 +1,12 @@
 package model;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
@@ -24,6 +29,7 @@ public class Overlord extends Circle {
         attackComplete = false;
         speed = 3;
         hp = 7;
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/overlord.png");
     }
 
     public void moveLeft() {
@@ -79,5 +85,17 @@ public class Overlord extends Circle {
 
     public int getHp(){
         return hp;
+    }
+
+
+    public void setImage(String src) {
+        try {
+            FileInputStream input = new FileInputStream(src);
+            Image image = new Image(input);
+            ImagePattern imagePattern = new ImagePattern(image);
+            setFill(imagePattern);
+        } catch (FileNotFoundException fnfe){
+            setFill(Color.DEEPPINK);
+        }
     }
 }

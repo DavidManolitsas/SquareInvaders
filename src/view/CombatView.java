@@ -303,7 +303,8 @@ class CombatView extends Pane {
 
         //draw lives
         for (int i = 0; i < remainingLives; i++) {
-            Life life = new Life(465 - (i * 25), 20, 10);
+//            Life life = new Life(465 - (i * 25), 20, 10);
+            Life life = new Life(455 - (i * 25), 10,20, 20);
             getChildren().add(life);
             level.addElement(level.getLifeArray(), life);
         }
@@ -362,7 +363,7 @@ class CombatView extends Pane {
 
                 if(level.getPlayer().isPoweredUp()){
                     level.getPlayer().setPoweredUp(false);
-                    level.getPlayer().setStroke(null);
+                    level.getPlayer().setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/player.png");
                 }
 
                 if (level.getLives() > 0){
@@ -513,6 +514,19 @@ class CombatView extends Pane {
             moveAliensLeftRight();
             time = 0;
         }
+
+        //power up appears
+        if(pickUpTimer > 50){
+            drawPowerUp();
+            pickUpTimer = 0;
+        }
+
+        checkPowerUpStatus();
+
+        if(level.getPowerUp() != null){
+            level.getPowerUp().moveDown();
+        }
+
     }
 
     public void levelTwoBehaviour(){
@@ -549,8 +563,6 @@ class CombatView extends Pane {
                 }
             }
         }
-
-
     }
 
     public void levelThreeBehaviour(){
