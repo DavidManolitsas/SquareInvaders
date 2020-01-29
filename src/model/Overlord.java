@@ -60,7 +60,8 @@ public class Overlord extends Circle {
     }
 
     public EnemyBullet shoot(){
-        EnemyBullet bullet = new EnemyBullet((int) getCenterX(), (int) getCenterY(), Color.GOLD);
+        EnemyBullet bullet = new EnemyBullet((int) getCenterX(), (int) getCenterY(), true);
+        bullet.setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/overlordBullet.png");
         return bullet;
     }
 

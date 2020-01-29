@@ -14,6 +14,8 @@ import javafx.scene.paint.ImagePattern;
  */
 public class EnemyBullet extends Bullet {
 
+    private boolean overlordBullet;
+
     public EnemyBullet(int x, int y) {
         super(x, y, 5, 15, Color.PURPLE);
         setSpeed(7);
@@ -22,9 +24,10 @@ public class EnemyBullet extends Bullet {
         setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/alienBullet.png");
     }
 
-    public EnemyBullet(int x, int y, Color color) {
-        super(x, y,10,10, color);
+    public EnemyBullet(int x, int y, boolean overlordBullet) {
+        super(x, y,10,10, Color.GOLD);
         setSpeed(9);
+        this.overlordBullet = overlordBullet;
         setTranslateX(x);
         setTranslateY(y);
     }

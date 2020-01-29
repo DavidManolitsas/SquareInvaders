@@ -244,7 +244,7 @@ class CombatView extends Pane {
                         power.setFallen(true);
                         getChildren().remove(powerUp);
                         level.getPlayer().setPoweredUp(true);
-                        level.getPlayer().setStroke(Color.TURQUOISE);
+                        level.getPlayer().setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/playerPowered.png");
                         level.getPlayer().setStrokeWidth(3);
                         break;
                     }

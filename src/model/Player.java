@@ -1,8 +1,12 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -21,8 +25,7 @@ public class Player extends Polygon {
         setTranslateX(x);
         setTranslateY(y);
         getPoints().addAll(17.5, 0.0, 0.0, 35.0, 35.0, 35.0);
-        setFill(Color.WHITE);
-        setStroke(Color.WHITE);
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/player.png");
     }
 
 
@@ -76,5 +79,16 @@ public class Player extends Polygon {
 
     public void setPoweredUp(boolean poweredUp) {
         this.poweredUp = poweredUp;
+    }
+
+    public void setImage(String src) {
+        try {
+            FileInputStream input = new FileInputStream(src);
+            Image image = new Image(input);
+            ImagePattern imagePattern = new ImagePattern(image);
+            setFill(imagePattern);
+        } catch (FileNotFoundException fnfe){
+            setFill(Color.WHITE);
+        }
     }
 }

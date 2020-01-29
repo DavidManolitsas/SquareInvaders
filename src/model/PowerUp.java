@@ -1,6 +1,11 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
@@ -17,6 +22,7 @@ public class PowerUp extends Circle {
     public PowerUp() {
         super(292.5, 7.0, 5.0, Color.TURQUOISE);
         this. speed = 1.5;
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/powerUp.png");
     }
 
 
@@ -35,6 +41,17 @@ public class PowerUp extends Circle {
 
     public void setFallen(boolean fallen) {
         this.fallen = fallen;
+    }
+
+    public void setImage(String src) {
+        try {
+            FileInputStream input = new FileInputStream(src);
+            Image image = new Image(input);
+            ImagePattern imagePattern = new ImagePattern(image);
+            setFill(imagePattern);
+        } catch (FileNotFoundException fnfe){
+            setFill(Color.TURQUOISE);
+        }
     }
 
 }
