@@ -10,10 +10,23 @@ public class SquareInvadersApp
 
     @Override
     public void start(Stage stage) throws Exception {
-        HighScoreDatabase highScoreDB = new HighScoreDatabase();
-        highScoreDB.runConnection();
+        //Database
+        HighScoreDatabase DB = new HighScoreDatabase();
+        DB.runConnection();
+//        DB.dropTable();
+        DB.createHighScoreTable();
 
-        Home home = new Home(stage);
+        int highScore = DB.getHighScore();
+        //TODO: testing
+//        System.out.println(highScore);
+
+        Home home;
+        if(highScore == 0) {
+            home = new Home(stage, DB);
+        }
+        else {
+            home = new Home(stage, highScore, DB);
+        }
         Scene scene = home.getScene();
         stage.setScene(scene);
         stage.show();

@@ -1,14 +1,15 @@
 package view;
 
 import javafx.geometry.Pos;
-        import javafx.scene.Cursor;
-        import javafx.scene.Scene;
-        import javafx.scene.layout.BorderPane;
-        import javafx.scene.layout.VBox;
-        import javafx.scene.paint.Color;
-        import javafx.scene.text.Font;
-        import javafx.scene.text.Text;
-        import javafx.stage.Stage;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import model.HighScoreDatabase;
 
 /**
  * @author David Manolitsas
@@ -19,10 +20,12 @@ import javafx.geometry.Pos;
 public class Win extends BorderPane {
     private CombatView combat;
     private Stage stage;
+    private HighScoreDatabase DB;
 
-    public Win(Stage stage, CombatView combat) {
+    public Win(Stage stage, CombatView combat, HighScoreDatabase DB) {
         this.stage = stage;
         this.combat = combat;
+        this.DB = DB;
     }
 
     public BorderPane getPane() {
@@ -41,7 +44,7 @@ public class Win extends BorderPane {
 
         playAgainBt.setCursor(Cursor.HAND);
         playAgainBt.setOnMouseClicked(click -> {
-            Home home = new Home(stage);
+            Home home = new Home(stage, DB);
             Scene scene = home.getScene();
             stage.setScene(scene);
             stage.show();

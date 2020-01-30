@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import model.HighScoreDatabase;
 
 
 /**
@@ -22,12 +22,14 @@ public class GameOver extends BorderPane {
     private Stage stage;
     private int highScore;
     private boolean newHighScore;
+    private HighScoreDatabase DB;
 
-    public GameOver(Stage stage, CombatView combat, int highScore, boolean newHighScore) {
+    public GameOver(Stage stage, CombatView combat, int highScore, boolean newHighScore, HighScoreDatabase DB) {
         this.stage = stage;
         this.combat = combat;
         this.highScore = highScore;
         this.newHighScore = newHighScore;
+        this.DB = DB;
     }
 
     public BorderPane getPane() {
@@ -54,7 +56,7 @@ public class GameOver extends BorderPane {
 
         retryBt.setCursor(Cursor.HAND);
         retryBt.setOnMouseClicked(click -> {
-            Home home = new Home(stage, highScore);
+            Home home = new Home(stage, highScore, DB);
             Scene scene = home.getScene();
             stage.setScene(scene);
             stage.show();

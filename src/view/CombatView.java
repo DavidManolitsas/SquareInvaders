@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Alien;
 import model.EnemyBullet;
+import model.HighScoreDatabase;
 import model.Level;
 import model.Life;
 import model.OneUp;
@@ -38,11 +39,14 @@ class CombatView extends Pane {
     private Text scoreText;
     private Text levelNumText;
     private Text highScoreText;
+    //database
+    private HighScoreDatabase DB;
 
-    public CombatView(Stage stage, Level level, int highScore) {
+    public CombatView(Stage stage, Level level, int highScore, HighScoreDatabase DB) {
         this.stage = stage;
         this.level = level;
         this.highScore = highScore;
+        this.DB = DB;
         level.setHighScore(this.highScore);
 
         //play level music
@@ -433,18 +437,19 @@ class CombatView extends Pane {
         level.getLevelCompleteSound().play();
         level.getMusic().stop();
 
-        if(level.getLevelNum() == 5){
+        if(level.getLevelNum() == 1){
             if(level.getScore() > level.getHighScore()){
-                level.setHighScore(level.getScore());
+                DB.newHighScore(level.getScore());
+
             }
 
-            Win playerWins = new Win(stage, this);
+            Win playerWins = new Win(stage, this, DB);
             Scene scene = new Scene(playerWins.getPane(), 600, 750, Color.BLACK);
             stage.setScene(scene);
         } else {
 
             Level nextLevel = new Level(level.getPlayer(), level.getLevelNum() + 1, level.getAlienRows() + 1, level.getLives(), level.getScore(), level.getHighScore());
-            CombatView combatView = new CombatView(stage, nextLevel, level.getHighScore());
+            CombatView combatView = new CombatView(stage, nextLevel, level.getHighScore(), DB);
             Scene scene = new Scene(combatView.setContent(), level.getBackground());
 
             scene.setOnKeyPressed(e1 -> {
@@ -475,11 +480,11 @@ class CombatView extends Pane {
         level.getMusic().stop();
 
         if(level.getScore() > level.getHighScore()){
-            level.setHighScore(level.getScore());
+            DB.newHighScore(level.getScore());
             newHighScore = true;
         }
 
-        GameOver playerLost = new GameOver(stage, this, level.getHighScore(), newHighScore);
+        GameOver playerLost = new GameOver(stage, this, level.getHighScore(), newHighScore, DB);
         Scene scene = new Scene(playerLost.getPane(), 600, 750, Color.BLACK);
         stage.setScene(scene);
     }

@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.HighScoreDatabase;
 import model.Level;
 import model.Player;
 
@@ -28,17 +29,20 @@ class Home {
     private MediaPlayer music;
     private int highScore;
     private final static String SOUND_ROOT = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/";
+    private HighScoreDatabase DB;
 
-    public Home (Stage stage, int highScore){
+    public Home (Stage stage, int highScore, HighScoreDatabase DB){
         this.stage = stage;
         this.highScore = highScore;
+        this.DB = DB;
         composeMusic();
         music.play();
     }
 
-    public Home (Stage stage){
+    public Home (Stage stage, HighScoreDatabase DB){
         this.stage = stage;
         this.highScore = 0;
+        this.DB = DB;
         composeMusic();
         music.play();
     }
@@ -61,7 +65,7 @@ class Home {
             music.stop();
             Level level1 = new Level(1, 1, 3, 0, this.highScore);
 
-            CombatView combatView = new CombatView(stage, level1, highScore);
+            CombatView combatView = new CombatView(stage, level1, highScore, DB);
             Scene combatScene = new Scene(combatView.setContent(), level1.getBackground());
             Player player = combatView.getLevel().getPlayer();
 
