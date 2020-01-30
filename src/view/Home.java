@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import model.Level;
 import model.Player;
 
@@ -63,8 +62,7 @@ class Home {
             Level level1 = new Level(1, 1, 3, 0, this.highScore);
 
             CombatView combatView = new CombatView(stage, level1, highScore);
-            Scene combatScene = new Scene(combatView.setContent(), Color.BLACK);
-
+            Scene combatScene = new Scene(combatView.setContent(), level1.getBackground());
             Player player = combatView.getLevel().getPlayer();
 
             combatScene.setOnKeyPressed(e1 -> {

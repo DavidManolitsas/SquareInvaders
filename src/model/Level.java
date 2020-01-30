@@ -1,11 +1,15 @@
 package model;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Shape;
 
 /**
@@ -399,4 +403,20 @@ public class Level {
     }
     //Region end: Sound effects
 
+
+    public ImagePattern getBackground(){
+        try {
+            FileInputStream input = new FileInputStream("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/background.png");
+            Image image = new Image(input);
+            ImagePattern imagePattern = new ImagePattern(image);
+            return imagePattern;
+        } catch (FileNotFoundException fnfe){
+
+        }
+        return null;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
 }

@@ -21,7 +21,7 @@ public class PowerUp extends Circle {
 
     public PowerUp() {
         super(292.5, 7.0, 5.0, Color.TURQUOISE);
-        this. speed = 1.5;
+        this. speed = 1.7;
         setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/powerUp.png");
     }
 

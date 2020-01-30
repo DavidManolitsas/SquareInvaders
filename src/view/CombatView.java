@@ -280,7 +280,7 @@ class CombatView extends Pane {
         highScoreText.setFont(Font.font("Courier New", 18));
         getChildren().add(highScoreText);
         highScoreText.setY(25);
-        highScoreText.setX(205);
+        highScoreText.setX(210);
 
     }
 
@@ -445,7 +445,7 @@ class CombatView extends Pane {
 
             Level nextLevel = new Level(level.getPlayer(), level.getLevelNum() + 1, level.getAlienRows() + 1, level.getLives(), level.getScore(), level.getHighScore());
             CombatView combatView = new CombatView(stage, nextLevel, level.getHighScore());
-            Scene scene = new Scene(combatView.setContent(), Color.BLACK);
+            Scene scene = new Scene(combatView.setContent(), level.getBackground());
 
             scene.setOnKeyPressed(e1 -> {
                 switch (e1.getCode()) {

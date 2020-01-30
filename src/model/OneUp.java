@@ -20,7 +20,7 @@ public class OneUp extends Circle {
 
     public OneUp() {
         super(292.5, 7.0, 5.0, Color.DEEPPINK);
-        this. speed = 1.5;
+        this. speed = 1.7;
         setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/life.png");
     }
 

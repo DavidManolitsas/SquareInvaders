@@ -41,7 +41,7 @@ public class Controls extends BorderPane {
         controlHeading.setFont(Font.font("Courier New", headerSize));
         controlHeading.setFill(Color.YELLOW);
 
-        Text controls = new Text("A: left\nD: Right\nSpace: Shoot\n");
+        Text controls = new Text("A: Left\nD: Right\nSpace: Shoot\n");
         controls.setFont(Font.font("Courier New", bodySize));
         controls.setFill(Color.YELLOW);
 
@@ -87,7 +87,7 @@ public class Controls extends BorderPane {
         overlordControl.setSpacing(15);
         //create components
         Overlord overlord = new Overlord(0,0);
-        Text overlordTxt = new Text("Overlord");
+        Text overlordTxt = new Text("???");
         overlordTxt.setFont(Font.font("Courier New", bodySize));
         overlordTxt.setFill(Color.YELLOW);
         //add components
