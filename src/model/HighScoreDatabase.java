@@ -64,6 +64,10 @@ public class HighScoreDatabase {
             System.out.println("Update table HIGH SCORE executed successfully");
             System.out.println(result + " row(s) affected");
 
+            if (result > 0){
+                return;
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -71,21 +75,23 @@ public class HighScoreDatabase {
 
 
         //NEW
-//        try (Connection con = getConnection(DB_NAME);
-//             Statement stmt = con.createStatement();
-//        ) {
-//            String query = "INSERT INTO TABLE_NAME VALUES ('" + score + "')";
-//            int result = stmt.executeUpdate(query);
-//
-//            con.commit();
-//
-//            System.out.println("Insert into table HIGH SCORE executed successfully");
-//            System.out.println(result + " row(s) affected");
-//
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+        try (Connection con = getConnection(DB_NAME);
+             Statement stmt = con.createStatement();
+        ) {
+            String query = "INSERT INTO TABLE_NAME VALUES ('" + score + "')";
+            int result = stmt.executeUpdate(query);
+
+            con.commit();
+
+            System.out.println("Insert into table HIGH SCORE executed successfully");
+            System.out.println(result + " row(s) affected");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
+
 
     public int getHighScore() {
         try (Connection con = getConnection(DB_NAME);

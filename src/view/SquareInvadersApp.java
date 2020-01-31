@@ -17,8 +17,6 @@ public class SquareInvadersApp
         DB.createHighScoreTable();
 
         int highScore = DB.getHighScore();
-        //TODO: testing
-//        System.out.println(highScore);
 
         Home home;
         if(highScore == 0) {

@@ -433,21 +433,26 @@ class CombatView extends Pane {
     }
 
     public void playerWinsRound(){
+        boolean newHighScore = false;
         level.setRoundOver(true);
         level.getLevelCompleteSound().play();
         level.getMusic().stop();
 
-        if(level.getLevelNum() == 1){
+        //player won the GAME
+        if(level.getLevelNum() == 5){
+            //new high score
             if(level.getScore() > level.getHighScore()){
                 DB.newHighScore(level.getScore());
-
+                level.setHighScore(level.getScore());
+                newHighScore = true;
             }
 
-            Win playerWins = new Win(stage, this, DB);
+            Win playerWins = new Win(stage, this, level.getHighScore(), newHighScore, DB);
             Scene scene = new Scene(playerWins.getPane(), 600, 750, Color.BLACK);
             stage.setScene(scene);
-        } else {
-
+        }
+        //Player won the ROUND
+        else {
             Level nextLevel = new Level(level.getPlayer(), level.getLevelNum() + 1, level.getAlienRows() + 1, level.getLives(), level.getScore(), level.getHighScore());
             CombatView combatView = new CombatView(stage, nextLevel, level.getHighScore(), DB);
             Scene scene = new Scene(combatView.setContent(), level.getBackground());
@@ -470,7 +475,6 @@ class CombatView extends Pane {
             stage.setScene(scene);
         }
 
-
     }
 
     public void playerLoses(){
@@ -481,6 +485,7 @@ class CombatView extends Pane {
 
         if(level.getScore() > level.getHighScore()){
             DB.newHighScore(level.getScore());
+            level.setHighScore(level.getScore());
             newHighScore = true;
         }
 
