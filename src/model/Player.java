@@ -15,24 +15,24 @@ import javafx.scene.shape.Polygon;
  * @date 2020-01-20
  */
 public class Player extends Polygon {
-    private int x;
-    private int y;
     private boolean dead = false;
     private boolean poweredUp = false;
+    private int speed;
     private int missileCount = 5;
 
     public Player(int x, int y, double... points) {
         super(points);
         setTranslateX(x);
         setTranslateY(y);
+        this.speed = 15;
         getPoints().addAll(17.5, 0.0, 0.0, 35.0, 35.0, 35.0);
         setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/player.png");
     }
 
 
     public void moveLeft() {
-        if (getTranslateX() - 10 > 0) {
-            setTranslateX(getTranslateX() - 10);
+        if (getTranslateX() - speed > 0) {
+            setTranslateX(getTranslateX() - speed);
         }
         else {
             setTranslateX(0);
@@ -40,8 +40,8 @@ public class Player extends Polygon {
     }
 
     public void moveRight() {
-        if(getTranslateX() + 10 < 565) {
-            setTranslateX(getTranslateX() + 10);
+        if(getTranslateX() + speed < 565) {
+            setTranslateX(getTranslateX() + speed);
         }
         else {
             setTranslateX(565);
