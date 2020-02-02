@@ -37,11 +37,13 @@ public class Level {
     private PowerUp powerUp = null;
     private ArrayList<OneUp> oneUps = new ArrayList<>();
     private ArrayList<PowerUp> powerUps = new ArrayList<>();
-    //lives
+    //player stats
     private ArrayList<Life> lifeArray = new ArrayList<>();
-    //bullets
+    private ArrayList<MissileIcon> missileIcons = new ArrayList<>();
+    //bullets & explosions
     private ArrayList<PlayerBullet> playerBullets = new ArrayList<>();
     private ArrayList<EnemyBullet> enemyBullets = new ArrayList<>();
+    private ArrayList<Explosion> explosions = new ArrayList<>();
     //sound effects
     private  final static String SOUND_ROOT = "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/";
     private AudioClip gunSound;
@@ -54,6 +56,8 @@ public class Level {
     private AudioClip playerKilledSound;
     private AudioClip levelCompleteSound;
     private AudioClip oneUpCollected;
+    private AudioClip explosion;
+    private AudioClip missile;
     //music
     private MediaPlayer music;
 
@@ -150,6 +154,10 @@ public class Level {
         return enemyBullets;
     }
 
+    public ArrayList<Explosion> getExplosions() {
+        return explosions;
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -188,6 +196,10 @@ public class Level {
 
     public ArrayList<Life> getLifeArray() {
         return lifeArray;
+    }
+
+    public ArrayList<MissileIcon> getMissileIcons() {
+        return missileIcons;
     }
 
     public <T> void addElement(ArrayList<T> list, Shape element){
@@ -301,6 +313,14 @@ public class Level {
         return oneUpCollected;
     }
 
+    public AudioClip getExplosion() {
+        return explosion;
+    }
+
+    public AudioClip getMissile() {
+        return missile;
+    }
+
     public void composeSoundEffects(){
         //bullet hit alien
         String gunImpactPath =  SOUND_ROOT + "sound/effects/gunImpact.wav";
@@ -348,6 +368,14 @@ public class Level {
         String oneUpPath = SOUND_ROOT + "sound/effects/1up.wav";
         oneUpCollected = new AudioClip(new File(oneUpPath).toURI().toString());
         oneUpCollected.setVolume(0.85);
+
+        //missile shot
+        String missileShotPath = SOUND_ROOT + "sound/effects/missile.wav";
+        missile = new AudioClip(new File(missileShotPath).toURI().toString());
+
+        //explosion
+        String explosionPath = SOUND_ROOT + "sound/effects/explosion.wav";
+        explosion = new AudioClip(new File(explosionPath).toURI().toString());
 
     }
 

@@ -18,9 +18,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Alien;
 import model.EnemyBullet;
+import model.Explosion;
 import model.HighScoreDatabase;
 import model.Level;
 import model.Life;
+import model.Missile;
+import model.MissileIcon;
 import model.OneUp;
 import model.Overlord;
 import model.Player;
@@ -35,12 +38,15 @@ class CombatView extends Pane {
     private double time = 0;
     private double overlordTimer = 0;
     private double pickUpTimer = 0;
+    private double explosionTimer = 0;
     //JavaFx Components
     private Text scoreText;
     private Text levelNumText;
     private Text highScoreText;
     //database
     private HighScoreDatabase DB;
+    //animation timer
+    private AnimationTimer timer;
 
     public CombatView(Stage stage, Level level, int highScore, HighScoreDatabase DB) {
         this.stage = stage;
@@ -61,8 +67,9 @@ class CombatView extends Pane {
         drawScore();
         drawHighScore();
         drawLives(level.getLives());
+        drawMissileIcons(level.getPlayer().getMissileCount());
 
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 redraw();
@@ -73,11 +80,16 @@ class CombatView extends Pane {
         return this;
     }
 
-    private void redraw() {
-        //update timers
+    private void runTimers(){
         time += 0.016;
         overlordTimer += 0.016;
         pickUpTimer += 0.16;
+        explosionTimer += 0.16;
+    }
+
+    private void redraw() {
+        //update timers
+        runTimers();
 
         //if music stops, start song again
         if(!level.getMusic().isAutoPlay()){
@@ -90,6 +102,10 @@ class CombatView extends Pane {
             drawPlayerBullets();
             drawEnemyBullets();
             checkGameStatus();
+
+            if(explosionTimer > 1) {
+                eraseExplosions();
+            }
 
             switch(level.getLevelNum()) {
             case 1:
@@ -307,11 +323,32 @@ class CombatView extends Pane {
 
         //draw lives
         for (int i = 0; i < remainingLives; i++) {
-//            Life life = new Life(465 - (i * 25), 20, 10);
-            Life life = new Life(455 - (i * 25), 10,20, 20);
+            Life life = new Life(455 - (i * 20), 10,20, 20);
             getChildren().add(life);
             level.addElement(level.getLifeArray(), life);
         }
+    }
+
+    public void drawMissileIcons(int missileCount){
+        //draw remaining missiles
+        for (int i = 0; i < missileCount; i++) {
+            MissileIcon missileIcon = new MissileIcon( 175 - (i * 15),10);
+            getChildren().add(missileIcon);
+            level.addElement(level.getMissileIcons(), missileIcon);
+        }
+    }
+
+    public void checkExplosionDamageOnAliens(Explosion explosion) {
+        for (Alien alien : level.getAliens()) {
+            //missile hits alien
+            if (alien.getBoundsInParent().intersects(explosion.getBoundsInParent())) {
+                alien.setHp(4);
+            }
+        }
+
+        explosionTimer = 0;
+        explosion.setDead(true);
+
     }
 
     public void drawPlayerBullets(){
@@ -323,31 +360,74 @@ class CombatView extends Pane {
                 break;
             }
 
-            //check if bullet hits an Alien
-            for(Alien alien: level.getAliens()){
-                if(alien.getBoundsInParent().intersects(bullet.getBoundsInParent())){
+            //Missile
+            if(bullet instanceof Missile) {
+                for (Alien alien : level.getAliens()) {
+                    //missile hits alien
+                    if (alien.getBoundsInParent().intersects(bullet.getBoundsInParent())) {
+                        //draw explosion
+                        Explosion explosion = new Explosion(bullet.getTranslateX() - 50, bullet.getTranslateY() - 40);
+                        getChildren().add(explosion);
+                        level.addElement(level.getExplosions(), explosion);
+
+                        //damage
+                        bullet.setDead(true);
+                        level.getExplosion().play();
+                        checkExplosionDamageOnAliens(explosion);
+                        killDeadAliens();
+                        break;
+                    }
+                }
+
+                //check if missile hits overlord
+                if (level.getOverlord() != null && level.getOverlord().getBoundsInParent().intersects(bullet.getBoundsInParent())) {
+                    //draw explosion
+                    Explosion explosion = new Explosion(bullet.getTranslateX() - 50, bullet.getTranslateY() - 40);
+                    getChildren().add(explosion);
+                    level.addElement(level.getExplosions(), explosion);
+
+                    bullet.setDead(true);
+                    explosion.setDead(true);
+                    explosionTimer = 0;
+                    level.getExplosion().play();
+                    level.getOverlord().setHp(2);
+
+                    //kill overlord and add score
+                    if (level.getOverlord().getHp() == 0) {
+                        resetOverlord();
+                        level.setScore(level.getScore() + 100);
+                        level.getOverlordKilled().play();
+                    }
+                    break;
+                }
+
+            }
+            //Normal player bullet
+            else {
+                //check if bullet hits an Alien
+                for (Alien alien : level.getAliens()) {
+                    if (alien.getBoundsInParent().intersects(bullet.getBoundsInParent())) {
+                        level.getGunImpact().play();
+                        bullet.setDead(true);
+                        alien.setHp(1);
+                        killDeadAliens();
+                        break;
+                    }
+                }
+
+                //check if bullet hits overlord
+                if (level.getOverlord() != null && level.getOverlord().getBoundsInParent().intersects(bullet.getBoundsInParent())) {
                     level.getGunImpact().play();
                     bullet.setDead(true);
-                    alien.setHp();
-                    killDeadAliens();
+                    level.getOverlord().setHp(1);
+                    if (level.getOverlord().getHp() == 0) {
+                        resetOverlord();
+                        level.setScore(level.getScore() + 100);
+                        level.getOverlordKilled().play();
+                    }
                     break;
                 }
             }
-
-            //check if bullet hits overlord
-            if(level.getOverlord() != null && level.getOverlord().getBoundsInParent().intersects(bullet.getBoundsInParent())){
-                level.getGunImpact().play();
-                bullet.setDead(true);
-                level.getOverlord().setHp();
-                if(level.getOverlord().getHp()  == 0) {
-                    resetOverlord();
-                    level.setScore(level.getScore() + 100);
-                    level.getOverlordKilled().play();
-                }
-                break;
-            }
-
-
         }
     }
 
@@ -388,6 +468,17 @@ class CombatView extends Pane {
             level.addElement(level.getPlayerBullets(), bullet);
             getChildren().add(bullet);
         }
+    }
+
+    public void playerShotMissile(Missile missile){
+        level.addElement(level.getPlayerBullets(), missile);
+        getChildren().add(missile);
+        level.getPlayer().decreaseMissileCount();
+
+        for(MissileIcon missileIcon : level.getMissileIcons()){
+            getChildren().remove(missileIcon);
+        }
+        drawMissileIcons(level.getPlayer().getMissileCount());
     }
 
     public void aliensShoot(double freq){
@@ -432,6 +523,14 @@ class CombatView extends Pane {
         level.setOverlord(null);
     }
 
+    public void eraseExplosions(){
+        for(Explosion explosion : level.getExplosions()){
+            if(explosion.isDead()){
+                getChildren().remove(explosion);
+            }
+        }
+    }
+
     public void playerWinsRound(){
         boolean newHighScore = false;
         level.setRoundOver(true);
@@ -464,6 +563,12 @@ class CombatView extends Pane {
                     break;
                 case D:
                     nextLevel.getPlayer().moveRight();
+                    break;
+                case M:
+                    if(level.getPlayer().getMissileCount() > 0) {
+                        combatView.playerShotMissile(level.getPlayer().shootMissile());
+                        combatView.getLevel().getMissile().play();
+                    }
                     break;
                 case SPACE:
                     combatView.getLevel().getGunSound().play();

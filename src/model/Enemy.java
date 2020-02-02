@@ -19,7 +19,7 @@ public abstract class Enemy extends Character {
 
     abstract public void moveDown();
 
-    abstract public void setHp();
+    abstract public void setHp(int damage);
 
     abstract public EnemyBullet shoot();
 }

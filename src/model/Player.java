@@ -19,6 +19,7 @@ public class Player extends Polygon {
     private int y;
     private boolean dead = false;
     private boolean poweredUp = false;
+    private int missileCount = 5;
 
     public Player(int x, int y, double... points) {
         super(points);
@@ -65,6 +66,12 @@ public class Player extends Polygon {
         }
     }
 
+    public Missile shootMissile(){
+        Missile missile = new Missile((int) this.getTranslateX() + 15, (int) this.getTranslateY());
+
+        return missile;
+    }
+
     public void setDead(boolean dead) {
         this.dead = dead;
     }
@@ -79,6 +86,14 @@ public class Player extends Polygon {
 
     public void setPoweredUp(boolean poweredUp) {
         this.poweredUp = poweredUp;
+    }
+
+    public int getMissileCount() {
+        return missileCount;
+    }
+
+    public void decreaseMissileCount() {
+        this.missileCount--;
     }
 
     public void setImage(String src) {

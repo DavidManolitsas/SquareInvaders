@@ -76,6 +76,12 @@ class Home {
                 case D:
                     player.moveRight();
                     break;
+                case M:
+                    if(player.getMissileCount() > 0) {
+                        combatView.playerShotMissile(level1.getPlayer().shootMissile());
+                        combatView.getLevel().getMissile().play();
+                    }
+                    break;
                 case SPACE:
                     combatView.getLevel().getGunSound().play();
                     combatView.playerShot(level1.getPlayer().shoot());

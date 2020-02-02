@@ -13,8 +13,7 @@ public abstract class MovableRectangle extends Rectangle {
     private int speed;
     private Boolean dead = false;
 
-    public MovableRectangle
-       (int x, int y, int w, int h, Color color) {
+    public MovableRectangle (int x, int y, int w, int h, Color color) {
         super(w, h, color);
         setTranslateX(x);
         setTranslateY(y);

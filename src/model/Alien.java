@@ -68,13 +68,13 @@ public class Alien extends Enemy {
     }
 
     @Override
-    public void setHp(){
-        hp--;
+    public void setHp(int damage){
+        hp-= damage;
 
         if (hp <= 0){
             setDead(true);
         }
-        else if(hp == 2){
+        else if(hp <= 2){
             setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/redAlien.png");
         }
         else if (hp > 2 && hp < 5){

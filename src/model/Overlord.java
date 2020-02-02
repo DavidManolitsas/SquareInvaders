@@ -79,8 +79,8 @@ public class Overlord extends Circle {
         return attackComplete;
     }
 
-    public void setHp(){
-        hp--;
+    public void setHp(int damage){
+        hp-= damage;
     }
 
     public int getHp(){

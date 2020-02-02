@@ -41,7 +41,7 @@ public class Controls extends BorderPane {
         controlHeading.setFont(Font.font("Courier New", headerSize));
         controlHeading.setFill(Color.YELLOW);
 
-        Text controls = new Text("A: Left\nD: Right\nSpace: Shoot\n");
+        Text controls = new Text("A: Left\nD: Right\nM: Shoot Missile\nSpace: Shoot\n");
         controls.setFont(Font.font("Courier New", bodySize));
         controls.setFill(Color.YELLOW);
 

@@ -10,14 +10,16 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * @author David Manolitsas
- * @project SpaceInvaders
- * @date 2020-01-21
+ * @project SquareInvaders
+ * @date 2020-02-02
  */
-public class Life extends Rectangle {
+public class MissileIcon extends Rectangle {
 
-    public Life(double x, double y, double width, double height) {
-        super(x, y, width, height);
-        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/life.png");
+    public MissileIcon(double x, double y) {
+        super(x, y, 10, 20);
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/missileIcon.png");
+
+
     }
 
     public void setImage(String src) {

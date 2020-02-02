@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 public abstract class Bullet extends MovableRectangle {
 
     private int speed;
-   private boolean dead;
+    private boolean dead;
 
     public Bullet(int x, int y, int w, int h, Color color) {
         super(x, y, w, h, color);
@@ -36,4 +36,5 @@ public abstract class Bullet extends MovableRectangle {
     abstract void moveUp();
 
     abstract void moveDown();
+
 }

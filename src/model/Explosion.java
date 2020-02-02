@@ -10,14 +10,27 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * @author David Manolitsas
- * @project SpaceInvaders
- * @date 2020-01-21
+ * @project SquareInvaders
+ * @date 2020-02-02
  */
-public class Life extends Rectangle {
+public class Explosion extends Rectangle {
 
-    public Life(double x, double y, double width, double height) {
-        super(x, y, width, height);
-        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/life.png");
+    private boolean dead;
+
+    public Explosion(double x, double y) {
+        super(120, 120, Color.GREEN);
+        dead = false;
+        setTranslateX(x);
+        setTranslateY(y);
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/explosion.png");
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     public void setImage(String src) {
@@ -27,7 +40,8 @@ public class Life extends Rectangle {
             ImagePattern imagePattern = new ImagePattern(image);
             setFill(imagePattern);
         } catch (FileNotFoundException fnfe){
-            setFill(Color.RED);
+            setFill(Color.GREEN);
         }
     }
+
 }
