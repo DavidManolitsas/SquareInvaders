@@ -300,7 +300,7 @@ class CombatView extends Pane {
         highScoreText.setFont(Font.font("Courier New", 18));
         getChildren().add(highScoreText);
         highScoreText.setY(25);
-        highScoreText.setX(210);
+        highScoreText.setX(220);
 
     }
 
