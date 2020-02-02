@@ -93,14 +93,15 @@ class Home {
             stage.show();
         });
 
-        Text controlBt = new Text("Controls");
-        controlBt.setFont(Font.font("Courier New", 28));
-        controlBt.setFill(Color.YELLOW);
+
+        Text settingBt = new Text("Settings");
+        settingBt.setFont(Font.font("Courier New", 28));
+        settingBt.setFill(Color.YELLOW);
 
         //CONTROLS
         ControlsHandler chHandler = new ControlsHandler(stage, scene);
-        controlBt.setCursor(Cursor.HAND);
-        controlBt.setOnMouseClicked(chHandler);
+        settingBt.setCursor(Cursor.HAND);
+        settingBt.setOnMouseClicked(chHandler);
 
         Text quitBt = new Text("Quit");
         quitBt.setFont(Font.font("Courier New", 28));
@@ -111,7 +112,7 @@ class Home {
             Platform.exit();
         });
 
-        homeText.getChildren().addAll(heading, startBt, controlBt, quitBt);
+        homeText.getChildren().addAll(heading, startBt, settingBt, quitBt);
         root.setCenter(homeText);
         homeText.setAlignment(Pos.CENTER);
         homeText.setSpacing(15);

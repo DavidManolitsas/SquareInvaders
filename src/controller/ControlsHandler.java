@@ -1,13 +1,11 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import view.Controls;
+import view.Settings;
 
 /**
  * @author David Manolitsas
@@ -27,7 +25,7 @@ public class ControlsHandler<T extends Event> implements EventHandler<T> {
 
     @Override
     public void handle(T event) {
-        Controls controls = new Controls(stage, prevScene);
+        Settings controls = new Settings(stage, prevScene);
 
         Scene scene = new Scene(controls.getPane(), 600, 750, Color.BLACK);
         stage.setScene(scene);

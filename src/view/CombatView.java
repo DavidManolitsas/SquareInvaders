@@ -332,7 +332,7 @@ class CombatView extends Pane {
     public void drawMissileIcons(int missileCount){
         //draw remaining missiles
         for (int i = 0; i < missileCount; i++) {
-            MissileIcon missileIcon = new MissileIcon( 175 - (i * 15),10);
+            MissileIcon missileIcon = new MissileIcon( 180 - (i * 15),10);
             getChildren().add(missileIcon);
             level.addElement(level.getMissileIcons(), missileIcon);
         }
@@ -355,6 +355,10 @@ class CombatView extends Pane {
         for (PlayerBullet bullet : level.getPlayerBullets()) {
             bullet.moveUp();
 
+            if(bullet.getTranslateY() <= 0){
+                bullet.setDead(true);
+            }
+
             if(bullet.getDead()){
                 deleteElement(level.getPlayerBullets(), bullet);
                 break;
@@ -365,6 +369,8 @@ class CombatView extends Pane {
                 for (Alien alien : level.getAliens()) {
                     //missile hits alien
                     if (alien.getBoundsInParent().intersects(bullet.getBoundsInParent())) {
+                        alien.setHp(1);
+
                         //draw explosion
                         Explosion explosion = new Explosion(bullet.getTranslateX() - 50, bullet.getTranslateY() - 40);
                         getChildren().add(explosion);
@@ -382,7 +388,7 @@ class CombatView extends Pane {
                 //check if missile hits overlord
                 if (level.getOverlord() != null && level.getOverlord().getBoundsInParent().intersects(bullet.getBoundsInParent())) {
                     //draw explosion
-                    Explosion explosion = new Explosion(bullet.getTranslateX() - 50, bullet.getTranslateY() - 40);
+                    Explosion explosion = new Explosion(bullet.getTranslateX() - 50, bullet.getTranslateY() - 45);
                     getChildren().add(explosion);
                     level.addElement(level.getExplosions(), explosion);
 
@@ -434,6 +440,10 @@ class CombatView extends Pane {
     public void drawEnemyBullets(){
         for (EnemyBullet bullet : level.getEnemyBullets()) {
             bullet.moveDown();
+
+            if(bullet.getTranslateY() >= 750){
+                bullet.setDead(true);
+            }
 
             if (bullet.getDead()) {
                 deleteElement(level.getEnemyBullets(), bullet);

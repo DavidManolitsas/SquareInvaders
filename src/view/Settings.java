@@ -21,14 +21,15 @@ import model.PowerUp;
  * @project SpaceInvaders
  * @date 2020-01-22
  */
-public class Controls extends BorderPane {
+public class Settings
+        extends BorderPane {
 
     private Stage stage;
     private Scene prevScene;
     private double bodySize = 22;
-    private double headerSize = 42;
+    private double headerSize = 38;
 
-    public Controls(Stage stage, Scene prevScene) {
+    public Settings(Stage stage, Scene prevScene) {
         this.stage = stage;
         this.prevScene = prevScene;
     }
@@ -36,6 +37,10 @@ public class Controls extends BorderPane {
     public BorderPane getPane() {
         VBox controlText = new VBox();
         controlText.setSpacing(10);
+
+        Text goal = new Text("Clear all 5 levels to win");
+        goal.setFont(Font.font("Courier New", 28));
+        goal.setFill(Color.YELLOW);
 
         Text controlHeading = new Text("Controls");
         controlHeading.setFont(Font.font("Courier New", headerSize));
@@ -119,7 +124,7 @@ public class Controls extends BorderPane {
         powerUpControl.setAlignment(Pos.CENTER);
 
 
-        controlText.getChildren().addAll(controlHeading, controls, playerControl, alienControl, overlordControl, oneUpControl, powerUpControl, backBt);
+        controlText.getChildren().addAll(goal, controlHeading, controls, playerControl, alienControl, overlordControl, oneUpControl, powerUpControl, backBt);
 
         setCenter(controlText);
         controlText.setAlignment(Pos.CENTER);
