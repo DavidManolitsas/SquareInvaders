@@ -52,10 +52,9 @@ class Home {
         Scene scene = new Scene(root, 600,750, Color.BLACK);
 
         VBox homeText = new VBox();
-        Text heading = new Text("Square Invaders");
+        Text heading = new Text("24 Hours Remain");
         heading.setFont(Font.font("Impact", 64));
         heading.setFill(Color.YELLOW);
-
         Text startBt = new Text("Start");
         startBt.setFont(Font.font("Courier New", 28));
         startBt.setFill(Color.YELLOW);

@@ -14,7 +14,9 @@ public class SquareInvadersApp
         HighScoreDatabase DB = new HighScoreDatabase();
         DB.runConnection();
 //        DB.dropTable();
-        DB.createHighScoreTable();
+//        DB.createHighScoreTable();
+//        DB.insertHighScore(1250);
+
 
         int highScore = DB.getHighScore();
 

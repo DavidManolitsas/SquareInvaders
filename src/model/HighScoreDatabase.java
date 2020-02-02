@@ -36,13 +36,13 @@ public class HighScoreDatabase {
         try (Connection con = getConnection(DB_NAME);
              Statement stmt = con.createStatement();
         ) {
-            int result = stmt.executeUpdate("CREATE TABLE TABLE_NAME (" +
-                                                    "score int) ");
+            int result = stmt.executeUpdate( "CREATE TABLE " + TABLE_NAME + " ("
+                                                     + "score int)" );
 
             if(result == 0) {
-                System.out.println("Table HIGH SCORE has been created successfully");
+                System.out.println("Table " + TABLE_NAME +  " has been created successfully");
             } else {
-                System.out.println("Table HIGH SCORE is not created");
+                System.out.println("Table " + TABLE_NAME + " is not created");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -57,11 +57,11 @@ public class HighScoreDatabase {
         ) {
             int result = 0;
 
-            String query = "UPDATE TABLE_NAME " + " SET score = '" + score + "'";
+            String query = "UPDATE " + TABLE_NAME + " SET score = '" + score + "'";
 
             result += stmt.executeUpdate(query);
 
-            System.out.println("Update table HIGH SCORE executed successfully");
+            System.out.println("Update table " + TABLE_NAME + " executed successfully");
             System.out.println(result + " row(s) affected");
 
             if (result > 0){
@@ -78,12 +78,12 @@ public class HighScoreDatabase {
         try (Connection con = getConnection(DB_NAME);
              Statement stmt = con.createStatement();
         ) {
-            String query = "INSERT INTO TABLE_NAME VALUES ('" + score + "')";
+            String query = "INSERT INTO " + TABLE_NAME + " VALUES ('" + score + "')";
             int result = stmt.executeUpdate(query);
 
             con.commit();
 
-            System.out.println("Insert into table HIGH SCORE executed successfully");
+            System.out.println("Insert into table " + TABLE_NAME + " executed successfully");
             System.out.println(result + " row(s) affected");
 
         } catch (Exception e) {
@@ -97,7 +97,7 @@ public class HighScoreDatabase {
         try (Connection con = getConnection(DB_NAME);
              Statement stmt = con.createStatement();) {
 
-            String query = "SELECT score FROM TABLE_NAME";
+            String query = "SELECT score FROM " + TABLE_NAME;
 
             try (ResultSet resultSet = stmt.executeQuery(query)) {
                 while(resultSet.next()){
@@ -117,11 +117,34 @@ public class HighScoreDatabase {
         return 0;
     }
 
+
+    /*
+     * The following method is used to reset the High Score if database needs changes
+     * Current High Score: 1250 (2/02/2020)
+     */
+    public void insertHighScore(int highScore){
+        try (Connection con = getConnection(DB_NAME);
+             Statement stmt = con.createStatement();
+        ) {
+
+            String query = "INSERT INTO " + TABLE_NAME + " VALUES ('"+ highScore +"')";
+
+            int result = stmt.executeUpdate(query);
+            con.commit();
+
+            System.out.println("Insert into table " + TABLE_NAME + " executed successfully");
+            System.out.println(result + " row(s) affected");
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void dropTable(){
         try (Connection con = getConnection(DB_NAME);
              Statement stmt = con.createStatement();
         ) {
-            stmt.executeUpdate("DROP TABLE TABLE_NAME");
+            stmt.executeUpdate("DROP TABLE "+ TABLE_NAME);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
