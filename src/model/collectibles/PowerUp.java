@@ -1,4 +1,4 @@
-package model;
+package model.collectibles;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

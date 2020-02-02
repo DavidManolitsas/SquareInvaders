@@ -1,6 +1,7 @@
-package model;
+package model.characters;
 
 import javafx.scene.paint.Color;
+import model.bullets.EnemyBullet;
 
 /**
  * @author David Manolitsas

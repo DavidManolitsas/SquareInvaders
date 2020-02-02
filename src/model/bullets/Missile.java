@@ -1,4 +1,4 @@
-package model;
+package model.bullets;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,31 +6,32 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 /**
  * @author David Manolitsas
  * @project SquareInvaders
  * @date 2020-02-02
  */
-public class Explosion extends Rectangle {
+public class Missile extends PlayerBullet {
 
-    private boolean dead;
-
-    public Explosion(double x, double y) {
-        super(120, 120, Color.GREEN);
-        dead = false;
+    public Missile(int x, int y) {
+        super(x, y);
+        super.setSpeed(10);
         setTranslateX(x);
         setTranslateY(y);
-        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/explosion.png");
+        setWidth(10);
+        setHeight(30);
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/missile.png");
     }
 
-    public boolean isDead() {
-        return dead;
+    @Override
+    public void moveUp() {
+        setTranslateY(getTranslateY() - getSpeed());
     }
 
-    public void setDead(boolean dead) {
-        this.dead = dead;
+    @Override
+    public void moveDown() {
+        setTranslateY(getTranslateY() + getSpeed());
     }
 
     public void setImage(String src) {

@@ -11,6 +11,16 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Shape;
+import model.bullets.EnemyBullet;
+import model.bullets.Explosion;
+import model.bullets.PlayerBullet;
+import model.characters.Alien;
+import model.characters.Overlord;
+import model.characters.Player;
+import model.collectibles.Life;
+import model.collectibles.MissileIcon;
+import model.collectibles.OneUp;
+import model.collectibles.PowerUp;
 
 /**
  * @author David Manolitsas

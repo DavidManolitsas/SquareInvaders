@@ -17,7 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.HighScoreDatabase;
 import model.Level;
-import model.Player;
+import model.characters.Player;
 
 /**
  * @author David Manolitsas

@@ -1,4 +1,4 @@
-package model;
+package model.collectibles;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,32 +6,20 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 
 /**
  * @author David Manolitsas
  * @project SquareInvaders
  * @date 2020-02-02
  */
-public class Missile extends PlayerBullet {
+public class MissileIcon extends Rectangle {
 
-    public Missile(int x, int y) {
-        super(x, y);
-        super.setSpeed(10);
-        setTranslateX(x);
-        setTranslateY(y);
-        setWidth(10);
-        setHeight(30);
-        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/missile.png");
-    }
+    public MissileIcon(double x, double y) {
+        super(x, y, 10, 20);
+        setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/missileIcon.png");
 
-    @Override
-    public void moveUp() {
-        setTranslateY(getTranslateY() - getSpeed());
-    }
 
-    @Override
-    public void moveDown() {
-        setTranslateY(getTranslateY() + getSpeed());
     }
 
     public void setImage(String src) {
@@ -41,8 +29,7 @@ public class Missile extends PlayerBullet {
             ImagePattern imagePattern = new ImagePattern(image);
             setFill(imagePattern);
         } catch (FileNotFoundException fnfe){
-            setFill(Color.GREEN);
+            setFill(Color.RED);
         }
     }
-
 }

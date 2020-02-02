@@ -10,11 +10,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.Alien;
-import model.OneUp;
-import model.Overlord;
-import model.Player;
-import model.PowerUp;
+import model.characters.Alien;
+import model.characters.Overlord;
+import model.characters.Player;
+import model.collectibles.OneUp;
+import model.collectibles.PowerUp;
 
 /**
  * @author David Manolitsas

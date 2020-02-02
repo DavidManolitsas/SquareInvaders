@@ -1,4 +1,4 @@
-package model;
+package model.characters;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import model.bullets.EnemyBullet;
 
 /**
  * @author David Manolitsas
