@@ -52,7 +52,7 @@ public class GameOver extends BorderPane {
 
         Text retryBt = new Text("Try Again?");
         retryBt.setFont(Font.font("Courier New", 28));
-        retryBt.setFill(Color.WHITE);
+        retryBt.setFill(Color.YELLOW);
 
         retryBt.setCursor(Cursor.HAND);
         retryBt.setOnMouseClicked(click -> {

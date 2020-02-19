@@ -7,6 +7,7 @@ package view;
  */
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
@@ -28,6 +29,7 @@ import model.characters.Player;
 import model.collectibles.Life;
 import model.collectibles.MissileIcon;
 import model.collectibles.OneUp;
+import model.collectibles.PickUp;
 import model.collectibles.PowerUp;
 
 class CombatView extends Pane {
@@ -227,52 +229,64 @@ class CombatView extends Pane {
         }
     }
 
-    public void checkOneUpStatus(){
-        if(level.getOneUp() != null){
-            OneUp oneUp = level.getOneUp();
+    public void dropPickUp(int chance){
+        Random rand = new Random();
+        int num = rand.nextInt(100);
 
-            if(oneUp.getCenterY() == 750 - oneUp.getRadius()){
-                getChildren().remove(oneUp);
-                oneUp.setFallen(true);
+        //drop rate
+        if(num < chance){
+            //Choose a random pickup
+            PickUp pickUp = level.getPickUps().get(rand.nextInt(level.getPickUps().size()));
+
+            if(pickUp instanceof PowerUp){
+                level.addElement(level.getFallingPickUps(), pickUp);
+                getChildren().add(pickUp);
             }
-            else if (!oneUp.isFallen()){
-                for (OneUp life : level.getOneUps()) {
-                    if (life.getBoundsInParent().intersects(level.getPlayer().getBoundsInParent())) {
-                        life.setFallen(true);
-                        getChildren().remove(oneUp);
+            else if (pickUp instanceof OneUp){
+                level.addElement(level.getFallingPickUps(), pickUp);
+                getChildren().add(pickUp);
+            }
+
+        }
+
+    }
+
+    public void checkFallingPickUps() {
+        for (PickUp pickUp : level.getFallingPickUps()) {
+            pickUp.moveDown();
+
+            //check if pick up has hit the bottom
+            if (pickUp.getCenterY() == 750 - pickUp.getRadius()) {
+                deleteElement(level.getFallingPickUps(), pickUp);
+                pickUp.setCenterY(0);
+                break;
+            } else if (!pickUp.isFallen()) {
+                if (pickUp.getBoundsInParent().intersects(level.getPlayer().getBoundsInParent())) {
+                    deleteElement(level.getFallingPickUps(), pickUp);
+
+                    if (pickUp instanceof OneUp) {
                         level.addLife();
                         drawLives(level.getLives());
                         level.getOneUpCollected().play();
+                        pickUp.setCenterY(0);
                         break;
-                    }
-                }
-            }
-        }
-    }
-
-    public void checkPowerUpStatus(){
-        if (level.getPowerUp() != null) {
-            PowerUp powerUp = level.getPowerUp();
-
-            if(powerUp.getCenterY() == 750 - powerUp.getRadius()){
-                getChildren().remove(powerUp);
-                powerUp.setFallen(true);
-            }
-            else if(!powerUp.isFallen()){
-                for(PowerUp power : level.getPowerUps()){
-                    if(power.getBoundsInParent().intersects(level.getPlayer().getBoundsInParent())){
-                        power.setFallen(true);
-                        getChildren().remove(powerUp);
+                    } else if (pickUp instanceof PowerUp) {
+                        getChildren().remove(pickUp);
                         level.getPlayer().setPoweredUp(true);
-                        level.getPlayer().setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/playerPowered.png");
+                        level.getPlayer().setImage(
+                                "/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/playerPowered.png");
                         level.getPlayer().setStrokeWidth(3);
+                        pickUp.setCenterY(0);
+
                         break;
                     }
+//                    deleteElement(level.getFallingPickUps(), pickUp);
                 }
             }
-
         }
+
     }
+
     //Region end: pickups
 
     public void drawScore(){
@@ -634,6 +648,7 @@ class CombatView extends Pane {
                 overlordShot(level.getOverlord().shoot());
             }
         }
+
         if (time > 3) {
             moveAliensDown();
             moveAliensLeftRight();
@@ -676,6 +691,14 @@ class CombatView extends Pane {
                 }
             }
         }
+
+        //power up appears
+        if(pickUpTimer > 100){
+            dropPickUp(50);
+            pickUpTimer = 0;
+        }
+        checkFallingPickUps();
+
     }
 
     public void levelThreeBehaviour(){
@@ -714,16 +737,11 @@ class CombatView extends Pane {
         }
 
         //power up appears
-        if(pickUpTimer > 200){
-            drawPowerUp();
+        if(pickUpTimer > 125){
+            dropPickUp(40);
             pickUpTimer = 0;
         }
-
-        checkPowerUpStatus();
-
-        if(level.getPowerUp() != null){
-            level.getPowerUp().moveDown();
-        }
+        checkFallingPickUps();
 
     }
 
@@ -765,17 +783,12 @@ class CombatView extends Pane {
             }
         }
 
-        //1up appears
-        if(pickUpTimer > 200){
-            drawOneUp();
+        //pick-up up appears
+        if(pickUpTimer > 150){
+            dropPickUp(25);
             pickUpTimer = 0;
         }
-
-        checkOneUpStatus();
-
-        if(level.getOneUp() != null){
-            level.getOneUp().moveDown();
-        }
+        checkFallingPickUps();
 
     }
 
@@ -817,13 +830,19 @@ class CombatView extends Pane {
                 }
             }
         }
+
+        //pick-up up appears
+        if(pickUpTimer > 175){
+            dropPickUp(10);
+            pickUpTimer = 0;
+        }
+        checkFallingPickUps();
+
     }
     //End region: level behaviour
 
     public Level getLevel() {
         return level;
     }
-
-
 
 }

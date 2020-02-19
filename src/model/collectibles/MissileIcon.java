@@ -18,8 +18,6 @@ public class MissileIcon extends Rectangle {
     public MissileIcon(double x, double y) {
         super(x, y, 10, 20);
         setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/missileIcon.png");
-
-
     }
 
     public void setImage(String src) {

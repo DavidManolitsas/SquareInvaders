@@ -6,40 +6,28 @@ import java.io.FileNotFoundException;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
 
 /**
  * @author David Manolitsas
  * @project SpaceInvaders
  * @date 2020-01-23
  */
-public class OneUp extends Circle {
 
-    private boolean fallen = false;
-    private double speed;
+public class OneUp extends PickUp {
 
     public OneUp() {
-        super(292.5, 7.0, 5.0, Color.DEEPPINK);
-        this. speed = 1.7;
+        super(292.5, 7.0, 5.0, Color.DEEPPINK, 1.7);
         setImage("/Users/david/Develop/IntelliJ-Workspace/SquareInvaders/pictures/life.png");
     }
 
-
+    @Override
     public void moveDown(){
         if(getCenterY() + getRadius() < 750 - getRadius()){
-            setCenterY(getCenterY() + speed);
+            setCenterY(getCenterY() + getSpeed());
         }
         else {
             setCenterY(750 - getRadius());
         }
-    }
-
-    public boolean isFallen() {
-        return fallen;
-    }
-
-    public void setFallen(boolean fallen) {
-        this.fallen = fallen;
     }
 
     public void setImage(String src) {

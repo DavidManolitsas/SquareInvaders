@@ -20,6 +20,7 @@ import model.characters.Player;
 import model.collectibles.Life;
 import model.collectibles.MissileIcon;
 import model.collectibles.OneUp;
+import model.collectibles.PickUp;
 import model.collectibles.PowerUp;
 
 /**
@@ -43,8 +44,12 @@ public class Level {
     private Player player = new Player(300, 700);
     private Overlord overlord;
     //collectibles
-    private OneUp oneUp = null;
-    private PowerUp powerUp = null;
+    private OneUp oneUp = new OneUp();
+    private PowerUp powerUp = new PowerUp();
+    private ArrayList<PickUp> pickUps = new ArrayList<>();
+    private ArrayList<PickUp> fallingPickUps = new ArrayList<>();
+
+    //TODO: old ones
     private ArrayList<OneUp> oneUps = new ArrayList<>();
     private ArrayList<PowerUp> powerUps = new ArrayList<>();
     //player stats
@@ -78,6 +83,7 @@ public class Level {
         this.lives = lives;
         this.score = score;
         this.roundOver = false;
+        initPickUps();
         addAliens();
         composeSoundEffects();
         setMusic();
@@ -91,6 +97,7 @@ public class Level {
         this.lives = lives;
         this.score = score;
         this.roundOver = false;
+        initPickUps();
         addAliens();
         composeSoundEffects();
         setMusic();
@@ -204,6 +211,18 @@ public class Level {
         return powerUps;
     }
 
+    public ArrayList<PickUp> getPickUps() {
+        return pickUps;
+    }
+
+    public void setPickUps(ArrayList<PickUp> pickUps) {
+        this.pickUps = pickUps;
+    }
+
+    public ArrayList<PickUp> getFallingPickUps() {
+        return fallingPickUps;
+    }
+
     public ArrayList<Life> getLifeArray() {
         return lifeArray;
     }
@@ -218,6 +237,11 @@ public class Level {
 
     public <T> void removeElement(ArrayList<T> list, Shape element){
         list.remove(element);
+    }
+
+    public void initPickUps(){
+        pickUps.add(powerUp);
+        pickUps.add(oneUp);
     }
 
     public void addAliens(){
