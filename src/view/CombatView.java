@@ -685,7 +685,7 @@ class CombatView extends Pane {
             }
         }
 
-        //power up appears
+        //pick-up appears
         if(pickUpTimer > 100){
             if(findLowestAlien() < 400) {
                 dropPickUp(50);
@@ -731,7 +731,7 @@ class CombatView extends Pane {
             }
         }
 
-        //power up appears
+        //pick-up appears
         if(pickUpTimer > 125){
             if(findLowestAlien() < 400) {
                 dropPickUp(45);
@@ -746,9 +746,6 @@ class CombatView extends Pane {
         if (time > 1) {
             if (level.getOverlord() != null && level.getOverlord().isAttacking()) {
                 level.getOverlord().attack();
-            }
-            if(level.getOneUp() != null){
-                level.getOneUp().moveDown();
             }
         }
         if (time > 2) {

@@ -48,10 +48,6 @@ public class Level {
     private PowerUp powerUp = new PowerUp();
     private ArrayList<PickUp> pickUps = new ArrayList<>();
     private ArrayList<PickUp> fallingPickUps = new ArrayList<>();
-
-    //TODO: old ones
-    private ArrayList<OneUp> oneUps = new ArrayList<>();
-    private ArrayList<PowerUp> powerUps = new ArrayList<>();
     //player stats
     private ArrayList<Life> lifeArray = new ArrayList<>();
     private ArrayList<MissileIcon> missileIcons = new ArrayList<>();
@@ -187,36 +183,8 @@ public class Level {
         this.overlord = overlord;
     }
 
-    public OneUp getOneUp() {
-        return oneUp;
-    }
-
-    public void setOneUp(OneUp oneUp) {
-        this.oneUp = oneUp;
-    }
-
-    public ArrayList<OneUp> getOneUps() {
-        return oneUps;
-    }
-
-    public PowerUp getPowerUp() {
-        return powerUp;
-    }
-
-    public void setPowerUp(PowerUp powerUp) {
-        this.powerUp = powerUp;
-    }
-
-    public ArrayList<PowerUp> getPowerUps() {
-        return powerUps;
-    }
-
     public ArrayList<PickUp> getPickUps() {
         return pickUps;
-    }
-
-    public void setPickUps(ArrayList<PickUp> pickUps) {
-        this.pickUps = pickUps;
     }
 
     public ArrayList<PickUp> getFallingPickUps() {
