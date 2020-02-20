@@ -197,6 +197,18 @@ class CombatView extends Pane {
             }
         }
     }
+
+    public double findLowestAlien(){
+        double lowestPoint = level.getAliens().get(0).getY();
+
+        for (Alien alien: level.getAliens()) {
+            if (alien.getTranslateY() > lowestPoint){
+                lowestPoint = alien.getTranslateY();
+            }
+        }
+        System.out.println(lowestPoint);
+        return lowestPoint;
+    }
     //End region: aliens movement
 
     public void drawPlayer(){
@@ -211,24 +223,6 @@ class CombatView extends Pane {
     }
 
     //Region start: pickups
-    public void drawOneUp(){
-        if(level.getOneUp() == null) {
-            OneUp oneUp = new OneUp();
-            level.setOneUp(oneUp);
-            level.addElement(level.getOneUps(), oneUp);
-            getChildren().add(level.getOneUp());
-        }
-    }
-
-    public void drawPowerUp(){
-        if(level.getPowerUp() == null){
-            PowerUp powerUp = new PowerUp();
-            level.setPowerUp(powerUp);
-            level.addElement(level.getPowerUps(), powerUp);
-            getChildren().add(level.getPowerUp());
-        }
-    }
-
     public void dropPickUp(int chance){
         Random rand = new Random();
         int num = rand.nextInt(100);
@@ -286,7 +280,6 @@ class CombatView extends Pane {
         }
 
     }
-
     //Region end: pickups
 
     public void drawScore(){
@@ -314,7 +307,7 @@ class CombatView extends Pane {
         highScoreText.setFont(Font.font("Courier New", 18));
         getChildren().add(highScoreText);
         highScoreText.setY(25);
-        highScoreText.setX(220);
+        highScoreText.setX(210);
 
     }
 
@@ -337,7 +330,7 @@ class CombatView extends Pane {
 
         //draw lives
         for (int i = 0; i < remainingLives; i++) {
-            Life life = new Life(455 - (i * 20), 10,20, 20);
+            Life life = new Life(458 - (i * 20), 10,20, 20);
             getChildren().add(life);
             level.addElement(level.getLifeArray(), life);
         }
@@ -694,7 +687,9 @@ class CombatView extends Pane {
 
         //power up appears
         if(pickUpTimer > 100){
-            dropPickUp(50);
+            if(findLowestAlien() < 400) {
+                dropPickUp(50);
+            }
             pickUpTimer = 0;
         }
         checkFallingPickUps();
@@ -738,7 +733,9 @@ class CombatView extends Pane {
 
         //power up appears
         if(pickUpTimer > 125){
-            dropPickUp(40);
+            if(findLowestAlien() < 400) {
+                dropPickUp(45);
+            }
             pickUpTimer = 0;
         }
         checkFallingPickUps();
@@ -785,7 +782,9 @@ class CombatView extends Pane {
 
         //pick-up up appears
         if(pickUpTimer > 150){
-            dropPickUp(25);
+            if(findLowestAlien() < 400) {
+                dropPickUp(33);
+            }
             pickUpTimer = 0;
         }
         checkFallingPickUps();
@@ -833,7 +832,9 @@ class CombatView extends Pane {
 
         //pick-up up appears
         if(pickUpTimer > 175){
-            dropPickUp(10);
+            if(findLowestAlien() < 400) {
+                dropPickUp(15);
+            }
             pickUpTimer = 0;
         }
         checkFallingPickUps();

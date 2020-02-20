@@ -52,7 +52,7 @@ public class Win extends BorderPane {
 
         Text playAgainBt = new Text("Play Again?");
         playAgainBt.setFont(Font.font("Courier New", 28));
-        playAgainBt.setFill(Color.WHITE);
+        playAgainBt.setFill(Color.YELLOW);
 
         playAgainBt.setCursor(Cursor.HAND);
         playAgainBt.setOnMouseClicked(click -> {
